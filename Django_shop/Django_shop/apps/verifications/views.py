@@ -17,3 +17,10 @@ class ImageCodeView(APIView):
         redis_conn.setex('img_%s' % image_code_id,constants.IMAGE_CODE_REDIS_EXPIRES,text)
 
         return HttpResponse(image,content_type='image/jpg')
+
+class SMSCodeView(GenericAPIView):
+    serializer_class = ImageCodeCheckSerializer
+
+    def get(self,request,mobile):
+        serializer = self.get_serializer(data=request.query_params)
+        serializer.is_vaild(raise_excption=True)
