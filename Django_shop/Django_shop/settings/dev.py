@@ -197,4 +197,7 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'Django_shop.utils.exceptions.exception_handler',
 }
 
+# 指定认证用户模型类
+AUTH_USER_MODEL = 'users.User'
+
 STATIC_URL = '/static/'
