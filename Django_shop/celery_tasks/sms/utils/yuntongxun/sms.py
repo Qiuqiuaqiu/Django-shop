@@ -1,8 +1,10 @@
 # -*- coding:utf-8 -*-
 
-from .CCPRestSDK import REST
+# from .CCPRestSDK import REST
 
 # 说明：主账号，登陆云通讯网站后，可在"控制台-应用"中看到开发者主账号ACCOUNT SID
+from celery_tasks.sms.utils.yuntongxun.CCPRestSDK import REST
+
 _accountSid = '8a216da86b2bc78f016b365bc7ff02ac'
 
 # 说明：主账号Token，登陆云通讯网站后，可在控制台-应用中看到开发者主账号AUTH TOKEN
