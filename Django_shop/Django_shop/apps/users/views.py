@@ -1,10 +1,12 @@
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from users.models import User
+from users.serilaizers import CreateUserSerializer
 
 
 class UsernameCountView(APIView):
@@ -31,3 +33,7 @@ class MobileCountView(APIView):
         }
 
         return Response(data)
+
+class UserView(CreateAPIView):
+
+    serializer_class = CreateUserSerializer
