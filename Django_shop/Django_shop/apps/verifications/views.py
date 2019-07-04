@@ -13,6 +13,7 @@ from verifications import constants
 
 # GET /image_codes/(?P<image_code_id>[\w-]+)/
 from verifications.serializer import ImageCodeCheckSerializer
+from celery_tasks.sms.views import send_sms_code
 
 
 class ImageCodeView(APIView):
@@ -45,7 +46,9 @@ class SMSCodeView(GenericAPIView):
         print('短信验证码:%s' % sms_code)
 
         sms_code_expires = str(constants.SMS_CODE_REDIS_EXPIRES // 60)
-        ccp = CCP()
-        ccp.send_template_sms(mobile, [sms_code, sms_code_expires], 1)
+        # ccp = CCP()
+        # ccp.send_template_sms(mobile, [sms_code, sms_code_expires], 1)
+
+        send_sms_code.delay(mobile,sms_code,sms_code_expires,constants.SMS_CODE_TEMP_ID)
 
         return Response({"message": "OK"})
