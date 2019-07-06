@@ -10,6 +10,18 @@ var vm = new Vue({
         remember: false
     },
     methods: {
+        qq_login: function(){
+            var next = this.get_query_string('next') || '/';
+            axios.get(this.host + '/oauth/qq/authorization/?next=' + next, {
+                    responseType: 'json'
+                })
+                .then(response => {
+                    location.href = response.data.login_url;
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                })
+        },
         // 获取url路径参数
         get_query_string: function(name){
             var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
