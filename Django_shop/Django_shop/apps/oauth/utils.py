@@ -1,7 +1,11 @@
-from urllib.parse import urlencode
-
+from urllib.parse import urlencode, parse_qs
+from urllib.request import urlopen
 from django.conf import settings
+from rest_framework.response import Response
+import logging
+from .exceptions import QQAuthException
 
+logger = logging.getLogger('django')
 
 class OAuthQQ(object):
 
@@ -24,3 +28,26 @@ class OAuthQQ(object):
         url = 'https://graph.qq.com/oauth2.0/authorize?' + urlencode(params)
 
         return url
+
+    def get_access_token(self,code):
+
+        params = {
+            'grant_type': 'authorization_code',
+            'client_id': self.client_id,
+            'client_secret': self.client_secret,
+            'code': code,
+            'redirect_uri': self.redirect_uri
+        }
+
+        url = 'https://graph.qq.com/oauth2.0/token?' + urlencode(params)
+        try:
+            response = urlopen(url)
+            response_data = response.read().decode()
+            data = parse_qs(response_data)
+        except Exception as e:
+            logger.error("获取access_token错误:%s" % e)
+            raise QQAuthException
+        else:
+            access_token = data.get('access_token', None)
+
+        return access_token

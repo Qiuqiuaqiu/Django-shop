@@ -19,3 +19,11 @@ class QQAuthURLView(APIView):
         oauth = OAuthQQ(state=next)
         login_url = oauth.get_qq_login_url()
         return Response({'login_url': login_url})
+
+class QQAuthUserView(APIView):
+
+    def get(self,code):
+
+        oauth = OAuthQQ()
+        access_token = oauth.get_access_token(code)
+        

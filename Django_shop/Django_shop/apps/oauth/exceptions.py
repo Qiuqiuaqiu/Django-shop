@@ -1,0 +1,2 @@
+class QQAuthException(Exception):
+    pass
