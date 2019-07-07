@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^mobiles/(?P<mobile>1[3-9]\d{9})/count/$', views.MobileCountView.as_view()), #判断手机号是否存在
     url(r'^users/$', views.UserView.as_view()), #注册接口
     url(r'^authorizations/$', obtain_jwt_token), #登录接口
+    url(r'^user/$', views.UserDetailView.as_view())
 ]
