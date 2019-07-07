@@ -1,9 +1,13 @@
+import json
 from urllib.parse import urlencode, parse_qs
 from urllib.request import urlopen
 from django.conf import settings
+from rest_framework import response
 from rest_framework.response import Response
+from oauth import constants
 import logging
 from .exceptions import QQAuthException
+from itsdangerous import TimedJSONWebSignatureSerializer as TJWSSerializer
 
 logger = logging.getLogger('django')
 
@@ -50,4 +54,35 @@ class OAuthQQ(object):
         else:
             access_token = data.get('access_token', None)
 
-        return access_token
+        return access_token[0]
+    def get_openid(self,access_token):
+        """
+       获取用户的openid
+       :param access_token: qq提供的access_token
+       :return: open_id
+       """
+        url = 'https://graph.qq.com/oauth2.0/me?access_token=' + access_token
+        resp = urlopen(url)
+        resp_data = resp.read().decode()
+        try:
+            data = json.loads(resp_data[10:-4])
+        except Exception as e:
+            data = parse_qs(resp_data)
+            logger.error('code=%s msg=%s' % (data.get('code'), data.get('msg')))
+            raise QQAuthException
+        else:
+            openid = data.get('openid', None)
+        # 返回的数据 callback( {"client_id":"YOUR_APPID","openid":"YOUR_OPENID"} )\n;
+        return openid
+
+    @staticmethod
+    def generate_save_user_token(openid):
+        """
+               生成保存用户数据的token
+               :param openid: 用户的openid
+               :return: token
+               """
+        serializer = TJWSSerializer(settings.SECRET_KEY, expires_in=constants.SAVE_QQ_USER_TOKEN_EXPIRES)
+        data = {'openid': openid}
+        token = serializer.dumps(data)
+        return token.decode()
