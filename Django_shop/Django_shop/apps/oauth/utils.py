@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from oauth import constants
 import logging
 from .exceptions import QQAuthException
-from itsdangerous import TimedJSONWebSignatureSerializer as TJWSSerializer
+from itsdangerous import TimedJSONWebSignatureSerializer as TJWSSerializer, BadData
 
 logger = logging.getLogger('django')
 
@@ -86,3 +86,18 @@ class OAuthQQ(object):
         data = {'openid': openid}
         token = serializer.dumps(data)
         return token.decode()
+
+    @staticmethod
+    def check_save_user_token(token):
+        """
+        检验保存用户数据的token
+        :param token: token
+        :return: openid or None
+        """
+        serializer = TJWSSerializer(settings.SECRET_KEY, expires_in=constants.SAVE_QQ_USER_TOKEN_EXPIRES)
+        try:
+            data = serializer.loads(token)
+        except BadData:
+            return None
+        else:
+            return data.get('openid')
