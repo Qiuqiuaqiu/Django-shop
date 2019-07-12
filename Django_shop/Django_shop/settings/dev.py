@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'users.apps.UsersConfig',
     'verifications.apps.VerificationsConfig',
-    'oauth.apps.OauthConfig'
+    'oauth.apps.OauthConfig',
+    'areas.apps.AreasConfig',
 ]
 
 MIDDLEWARE = [
@@ -245,8 +246,16 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_PORT = 25
 #发送邮件的邮箱
-EMAIL_HOST_USER = 'itcast88@163.com'
+EMAIL_HOST_USER = 'zzr18503853101@163.com'
 #在邮箱中设置的客户端授权密码
-EMAIL_HOST_PASSWORD = 'python808'
+EMAIL_HOST_PASSWORD = 'abc123'
 #收件人看到的发件人
-EMAIL_FROM = 'python<itcast88@163.com>'
+EMAIL_FROM = 'python<zzr18503853101@163.com>'
+
+# DRF扩展
+REST_FRAMEWORK_EXTENSIONS = {
+    # 缓存时间
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 60,
+    # 缓存存储
+    'DEFAULT_USE_CACHE': 'default',
+}
