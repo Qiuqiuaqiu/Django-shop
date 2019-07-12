@@ -2,12 +2,15 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
 from areas import serializers
 from areas.models import Area
 
 
-class AreasViewSet(ReadOnlyModelViewSet):
+class AreasViewSet(CacheResponseMixin, ReadOnlyModelViewSet):
+
+    pagination_class = None
 
     def get_queryset(self):
         if self.action == 'list':
