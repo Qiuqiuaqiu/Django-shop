@@ -1,9 +1,13 @@
 from django.db import models
 
 # Create your models here.
-from Django_shop.utils.models import BaseModel
+
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor_uploader import views
+
+from Django_shop.utils.models import BaseModel
+
 
 class GoodsCategory(BaseModel):
     """
