@@ -2,7 +2,8 @@ from django.db import models
 
 # Create your models here.
 from Django_shop.utils.models import BaseModel
-
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class GoodsCategory(BaseModel):
     """
@@ -28,6 +29,7 @@ class GoodsChannel(BaseModel):
     category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, verbose_name='顶级商品类别')
     url = models.CharField(max_length=50, verbose_name='频道页面链接')
     sequence = models.IntegerField(verbose_name='组内顺序')
+
 
     class Meta:
         db_table = 'tb_goods_channel'
@@ -66,6 +68,10 @@ class Goods(BaseModel):
     category3 = models.ForeignKey(GoodsCategory, on_delete=models.PROTECT, related_name='cat3_goods', verbose_name='三级类别')
     sales = models.IntegerField(default=0, verbose_name='销量')
     comments = models.IntegerField(default=0, verbose_name='评价数')
+
+    desc_detail = RichTextUploadingField(default='', verbose_name='详细介绍')
+    desc_pack = RichTextField(default='', verbose_name='包装信息')
+    desc_service = RichTextUploadingField(default='', verbose_name='售后服务')
 
     class Meta:
         db_table = 'tb_goods'
