@@ -70,6 +70,8 @@ class OAuthQQUserSerializer(serializers.ModelSerializer):
             # 如果用户不存在，创建用户，绑定openid（创建了OAuthQQUser数据）
             user = User.objects.create_user(username=mobile, mobile=mobile, password=password)
 
+        self.context['view'].user = user
+
         OauthQQUser.objects.create(user=user, openid=openid)
 
         # 签发jwt token
