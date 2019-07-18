@@ -22,7 +22,7 @@ sys.path.insert(0,os.path.join(BASE_DIR, 'apps'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING: keep the secret keys used in production secret!
 SECRET_KEY = '12o9vsb4atv&)#6*_h94&^5bm3&m%2x*v@k012iwi*n6p9^)@6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'goods.apps.GoodsConfig',
     'contents.apps.ContentsConfig',
     'carts.apps.CartsConfig',
-    'orders.apps.OrdersConfig'
+    'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -322,3 +323,8 @@ HAYSTACK_CONNECTIONS = {
 
 # 当添加、修改、删除数据时，自动生成索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+# 支付宝
+ALIPAY_APPID = "2016101100660330"
+ALIPAY_URL = "https://openapi.alipaydev.com/gateway.do"
+ALIPAY_DEBUG = True
