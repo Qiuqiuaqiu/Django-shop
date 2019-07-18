@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('create_time', models.DateTimeField(auto_now_add=True, verbose_name='创建时间')),
                 ('update_time', models.DateTimeField(auto_now=True, verbose_name='更新时间')),
                 ('name', models.CharField(max_length=50, verbose_name='名称')),
-                ('keys', models.CharField(max_length=50, verbose_name='类别键名')),
+                ('key', models.CharField(max_length=50, verbose_name='类别键名')),
             ],
             options={
                 'verbose_name_plural': '广告内容类别',
