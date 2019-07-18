@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'ckeditor_uploader',  # 富文本编辑器上传图片模块
     'django_crontab',  # 定时任务
     'haystack', #搜索引擎管理器
+    'xadmin',  #xadmin配置
+    'crispy_forms', #xadmin配置扩展
+    'reversion',  #xadmin配置扩展
     'users.apps.UsersConfig',
     'verifications.apps.VerificationsConfig',
     'oauth.apps.OauthConfig',
